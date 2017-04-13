@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/bin/ssh -i /usr/share/foreman-proxy/.ssh/id_rsa_foreman_proxy $@

@@ -1,0 +1,42 @@
+#!/bin/expect -f
+#
+
+set force_conservative 0  ;# set to 1 to force conservative mode even if
+			  ;# script wasn't run conservatively originally
+if {$force_conservative} {
+	set send_slow {1 .1}
+	proc send {ignore arg} {
+		sleep .1
+		exp_send -s -- $arg
+	}
+}
+
+log_user 0
+
+set username [lindex $argv 0];
+set hostname [lindex $argv 1];
+set passfile [lindex $argv 2];
+set RESULT 1
+
+spawn ssh -i /root/.upak -q -t -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null unixpa@$hostname su - $username -c whoami
+expect "assword: "
+send -- "[read [open "$passfile" r]]"
+expect { 
+                            "root\r\n" {
+                                      set RESULT 0
+                                     }
+        "su: Authentication failure" {
+                                      set RESULT 1
+                                     }
+
+            "su: incorrect password" {
+                                      set RESULT 1
+                                     }
+}
+
+
+expect eof
+#catch wait result
+#exit [lindex $result 3]
+
+exit $RESULT

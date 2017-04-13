@@ -1,0 +1,56 @@
+#!/bin/bash
+RHOST=$1
+if [[ -z $RHOST ]]; then
+   echo "Please provide the name of a system to push unixpa to."
+   exit 4
+fi
+echo "This script will attempt to ensure the \"unixpa\" user is setup and authorized."
+echo "correctly on the remote system. In order for this to work we'll need to be able"
+echo "to log in as root, or as a user with sudo privileges."
+echo ""
+read -p "Specify privilege method: (root|sudo): " gPMETH
+if [[ -n "$gPMETH" ]]; then
+   if [[ -n `echo $gPMETH | grep -i root` ]]; then
+      RUSER=root
+   elif [[ -n `echo $gPMETH | grep -i sudo` ]]; then
+      eRUSER=$USER
+      if [[ "$eRUSER" == "root" ]]; then
+         eRUSER=$(ps --no-header -t $(ps --no-header -p $$ -o tty) -o user | sort -u | egrep -v 'root')
+      fi
+      read -p "What user ID will be used to connect to $RHOST? [$eRUSER]: " gRUSER
+      if [[ -z $gRUSER ]]; then
+         RUSER=$eRUSER
+      else
+         RUSER=$gRUSER
+      fi
+      if [[ -z $RUSER ]]; then
+         echo "Error: a user ID is required." 1>&2
+         exit 3
+      fi
+      
+   else
+      echo "Error: privilege method [$gPMETH] is invalid." 1>&2
+      exit 2
+   fi
+else
+   echo "Error: no privilege method selected." 1>&2
+   exit 1
+fi
+
+# Test connectivity
+SSHCOM="/usr/bin/ssh -tt -o stricthostkeychecking=no -o userknownhostsfile=/dev/null"
+echo "For security reasons you will be prompted to enter passwords multiple times."
+$SSHCOM ${RUSER}@${RHOST} /bin/true
+RETCODE=$?
+if [[ "$RETCODE" != "0" ]]; then
+   echo "Error connecting to $RHOST via SSH.  Please verify the password and that the user $RUSER exists there." 1>&2
+   exit $RETCODE
+else
+   # See if we can sudo via SSH
+   ANSWER=$($SSHCOM ${RUSER}@${RHOST} sudo whoami)
+   if [[ "$ANSWER" != "root" ]]; then
+      echo "Unable to issue commands via SUDO on $RHOST" 1>&2
+      exit 4
+   fi
+fi
+
