@@ -1,0 +1,110 @@
+ASM PORTION
+
+./runInstaller -silent -responseFile /usr/local/home/oracle/OracleASM11203InstallRSP.rsp \
+-nowelcome -silent -ignorePrereq -ignoreSysPrereqs \
+INVENTORY_LOCATION=/opt/oracle/oraInventory \
+SELECTED_LANGUAGES=en \
+ORACLE_BASE=/opt/oracle \
+ORACLE_HOME=/opt/oracle/product/11.2.0/grid \
+oracle.install.option=HA_CONFIG \
+oracle.install.asm.OSDBA=dba \
+oracle.install.asm.OSOPER=dba \
+oracle.install.asm.OSASM=dba \
+oracle.install.crs.config.autoConfigureClusterNodeVIP=false \
+oracle.install.asm.diskGroup.name=DATA \
+oracle.install.asm.diskGroup.redundancy=EXTERNAL \
+oracle.install.asm.diskGroup.diskDiscoveryString=/dev/oracleasm/disks/* \
+oracle.install.asm.diskGroup.disks=/dev/oracleasm/disks/DATA01 \
+oracle.install.asm.SYSASMPassword=kwtdec14 \
+oracle.install.asm.monitorPassword=kwtsep09
+
+^^^^^ runs in background for awhile.. seems like it's not.. wait until you get this:
+"Successfully Setup Software." and script info
+
+
+As Root:
+/opt/oracle/product/11.2.0/grid/root.sh
+
+
+As Oracle:
+/opt/oracle/product/11.2.0/grid/cfgtoollogs/configToolAllCommands
+
+/opt/oracle/product/11.2.0/grid/cfgtoollogs/configToolAllCommands RESPONSE_FILE=/usr/local/home/oracle/cfgrsp.properties
+
+
+
+STOP THE LISTENER:
+/opt/oracle/product/11.2.0/grid/bin lsnrctl stop
+
+
+Add the following to /opt/oracle/product/11.2.0/grid/network/admin/listener.ora:
+SID_LIST_LISTENER =
+        (SID_LIST =
+        (SID_DESC =
+                (SID_NAME = +ASM)
+                (ORACLE_HOME = /opt/oracle/product/11.2.0/grid)
+        )
+        )
+
+Add the following to /opt/oracle/product/11.2.0/grid/network/admin/tnsnames.ora
++ASM =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = azropmols001.acmeplaza.com)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = +ASM)
+      (UR=A)
+    )
+  )
+
+
+START THE LISTENER
+/opt/oracle/product/11.2.0/grid/bin lsnrctl start
+
+
+ADD DATA02 Disk to ASM
+/opt/oracle/product/11.2.0/grid/bin/asmca -silent -sysAsmPassword kwtdec14 -addDisk -diskGroupName DATA -disk '/dev/oracleasm/disks/DATA02'
+
+
+ADD FLASH diskgroup to ASM
+/opt/oracle/product/11.2.0/grid/bin/asmca -silent -sysAsmPassword kwtdec14 -createDiskGroup -diskGroupName FLASH -redundancy EXTERNAL -disk '/dev/oracleasm/disks/FLASH01'
+
+
+
+DATABASE PORTION
+
+/misc/software/Oracle/11.2/11.2.0.3/database/runInstaller -silent -ignoreSysPrereqs -ignorePrereq -responseFile /usr/local/home/oracle/OracleDB11203InstallRSP.rsp
+^^^^^^this will run for a good while in the background
+
+As Root:
+/opt/oracle/product/11.2.0/db_1/root.sh
+
+
+
+
+CREATE SOFTLINK FOR TNS
+ln -s /misc/tns_admin/tnsnames.ora /opt/oracle/product/11.2.0/db_1/network/admin/tnsnames.ora
+
+
+
+BASH_PROFILE CHANGE - changes to /usr/local/home/oracle/.bash_profile for oracle user:
+
+
+ORACLE_BASE=/opt/oracle
+export ORACLE_BASE
+
+ASM_HOME=$ORACLE_BASE/product/11.2.0/grid
+export ASM_HOME
+
+ORACLE_HOME=$ORACLE_BASE/product/11.2.0/db_1
+export ORACLE_HOME
+
+PATH=$PATH:$ORACLE_HOME/bin:$HOME/bin
+
+export PATH
+
+
+
+
+
+

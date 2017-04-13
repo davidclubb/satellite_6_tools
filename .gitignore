@@ -1,3 +1,5 @@
 .sat.env
 .satapi.env
 .inv.env
+.adposix.env
+.checkdns.env

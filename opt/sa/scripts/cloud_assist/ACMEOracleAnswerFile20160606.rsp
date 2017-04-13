@@ -1,0 +1,174 @@
+###############################################################
+## OracleAnswerFile20160606.rsp                              ##
+##                                                           ##
+## Specify values for the variables listed below to customize##
+## your installation.                                        ##
+##                                                           ##
+## Each variable is associated with a comment. The comment   ##
+## identifies the variable type.                             ##
+##                                                           ##
+## Please specify the values in the following format:        ##
+##                                                           ##
+##         Type         Example                              ##
+##         String       "Sample Value"                       ##
+##         Boolean      True or False                        ##
+##         Number       1000                                 ##
+##         StringList   {"String value 1","String Value 2"}  ##
+##                                                           ##
+##                                                           ##
+##          !!!!!IMPORTANT!!!!!                              ##
+##                                                           ##
+##  PLEASE VERIFY (CUSTOMIZE) THE VALUES FOR THE FOLLOWING   ##
+##  VARIABLES BEFORE USING THIS FILE FOR SILENT INSTALL.TKX! ##
+##                                                           ##
+##  1) UNIX_GROUP_NAME                                       ##
+##  2) ORACLE_HOME && ORACLE_HOME_NAME                       ##
+##  3) s_GlobalDBName                                        ##
+##  4) s_dbSid                                               ##
+##  5) s_mountPoint                                          ##
+##                                                           ##
+##  ALSO, MAKE SURE /var/opt/oracle/oraInst.loc EXISTS.      ##
+##  TYPICAL ENTRY IN "oraInst.loc" LOOKS LIKE -              ##
+##  inventory_loc=/home/dba/oraInventory                     ##
+##  BASICALLY, WHEREVER INVENTORY NEEDS TO BE LOCATED.       ##
+##                                                           ##
+##  AT THE END OF SILENT INSTALL LOOK UP THE FOLLOWING LOGS: ##
+##  - oraInventory/logs/installActions.log                   ##
+##    (for $ORACLE_HOME/root.sh execution, etc.)             ##
+##  - /tmp/silentInstall.log                                 ##
+##                                                           ##
+###############################################################
+
+[General]
+
+RESPONSEFILE_VERSION=2016.06.16.3
+
+[Session]
+
+#UNIX_GROUP_NAME;String;Used in Dialog
+#Group that the current user is part of, for ownership of the install files.
+UNIX_GROUP_NAME="dba"
+
+#FROM_LOCATION;String;Used in Dialog
+#Full path for the products.jar file.
+#Replace the X: with the drive letter of your CD-ROM device.
+FROM_LOCATION="X:\stage\products.jar"
+
+#FROM_LOCATION_CD_LABEL;String:Used in multi-CD installations. 
+#It includes the label of the Compact Disk where the file "products.jar" exists. 
+#The label can be found in the file "disk.label" in the same directory as 
+"products.jar".
+
+#ORACLE_HOME;String;Used in Dialog
+#Enter the path to your oracle home.  Replace the drive letter and optionally
+#alter the home path.
+ORACLE_HOME="X:\Oracle\Ora81"
+
+#ORACLE_HOME_NAME;String;Used in Dialog
+#Enter the name of this oracle home.  The name will be used to identify this
+#home.
+ORACLE_HOME_NAME="OraHome81"
+
+#TOPLEVEL_COMPONENT;StringList;Used in Dialog
+#Choices: "oracle.server", "8.1.5.0.0"
+TOPLEVEL_COMPONENT={"oracle.server", "8.1.5.0.0"}
+
+#SHOW_COMPONENT_LOCATIONS_PAGE;Boolean;Used in Dialog
+#Some components are flexible in where they are installed, although all have
+# default locations. Set this to FALSE if you want to accept the default 
+locations
+# and not show this page.
+SHOW_COMPONENT_LOCATIONS_PAGE=false
+
+#SHOW_SUMMARY_PAGE;Boolean;Used in Dialog <---------------
+#MUST be <false> for "silent" install
+SHOW_SUMMARY_PAGE=false
+
+#SHOW_INSTALL_PROGRESS_PAGE;Boolean;Used in Dialog <---------------
+#MUST be <false> for "silent" install
+SHOW_INSTALL_PROGRESS_PAGE=false
+
+#SHOW_REQUIRED_CONFIG_TOOL_PAGE;Boolean;Used in Dialog
+SHOW_REQUIRED_CONFIG_TOOL_PAGE=false
+
+#SHOW_OPTIONAL_CONFIG_TOOL_PAGE;Boolean;Used in Dialog
+SHOW_OPTIONAL_CONFIG_TOOL_PAGE=false
+
+#SHOW_END_SESSION_PAGE;Boolean;Used in Dialog <---------------
+#MUST be <false> for "silent" install
+SHOW_END_SESSION_PAGE=false
+
+#Parameter : LOCATION_FOR_DISK2 
+#Type : String 
+#Description : Complete path to the other disks. 
+#Example : LOCATION_FOR_DISK2 = "..\..\Disk2" 
+LOCATION_FOR_DISK2="F:\teststage\cd\Disk3"
+
+#Parameter : NEXT_SESSION
+#Type : Boolean
+#Description : Set to true if the installer needs to go to the File
+Locations page for another installation.
+#Example : NEXT_SESSION = true
+NEXT_SESSION=true
+#Parameter : SHOW_SPLASH_SCREEN
+#Type : Boolean
+#Description : Set to true if the initial splash screen in the installer
+needs to be shown.
+#Example : SHOW_SPLASH_SCREEN = true
+SHOW_SPLASH_SCREEN=true
+
+#Parameter : SHOW_WELCOME_PAGE
+#Type : Boolean
+#Description : Set to true if the Welcome page in the installer needs to
+be shown.
+#Example : SHOW_WELCOME_PAGE = false
+SHOW_WELCOME_PAGE=false
+
+#Parameter : SHOW_ROOTSH_CONFIRMATION
+#Type : Boolean
+#Description : Set to true if the Confirmation dialog asking to run the
+root.sh script in the installer needs to be shown.
+#Valid only in Unix platforms.
+#Example : SHOW_ROOTSH_CONFIRMATION = true
+SHOW_ROOTSH_CONFIRMATION=true
+
+#Parameter : SHOW_EXIT_CONFIRMATION
+#Type : Boolean
+#Description : Set to true if the confirmation when exiting the
+installer needs to be shown.
+#Example : SHOW_EXIT_CONFIRMATION = true
+SHOW_EXIT_CONFIRMATION=true
+
+[oracle.server_8.1.5.0.0]
+#INSTALL_TYPE;String;Used in Dialog
+# Minimal - Optional pre-configured DB (b_createDB), Networking services, Server 
+utilities
+# Typical - Pre-configured starter DB, Licensable options and Cartridges,
+#           Networking services, Server utilities
+
+INSTALL_TYPE="Typical"
+
+[oracle.rdbms_8.1.5.0.0]
+
+#OPTIONAL_CONFIG_TOOLS;StringList
+#OPTIONAL_CONFIG_TOOLS={"dbassist"}  OR OPTIONAL_CONFIG_TOOLS={"Oracle Database 
+Configuration Assistant"}
+
+#s_GlobalDBName;String;Used in Dialog
+#This is the name of the database which will be created as part of the typical 
+install.
+#You should modify this string to use an appropriate name.
+s_GlobalDBName="acme.us.oracle.com"
+
+#s_mountPoint;String;Used in Dialog
+#Database file location: directory for datafiles, control files, redo logs
+s_mountPoint="/home/oracle/dbs"
+
+#s_dbSid;String;Used in Dialog
+#Value for ORACLE_SID. Change this to an appropriate SID.
+s_dbSid="ORCL"
+
+#b_createDB;Boolean
+#Relevant only in MINIMAL, set to TRUE if you want a starter database, set to 
+FALSE if not.
+b_createDB=false
