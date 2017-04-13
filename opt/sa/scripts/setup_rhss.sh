@@ -18,7 +18,7 @@ else
    exit 255
 fi
 
-SSDNSNAME=knerhsilp001.kiewitplaza.com
+SSDNSNAME=satellite5.acmeplaza.com
 
 # Get distro and release
 DISTRO=`f_GetRelease | awk '{print $1}'`
@@ -90,7 +90,7 @@ rpm --import http://${SSDNSNAME}/pub/RPM-GPG-KEY-redhat-release-${RELEASE}
 #/bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
 
 # Install the satellite custom signing key
-/bin/rpm --import http://${SSDNSNAME}/pub/KIEWIT-RHSS-GPG-KEY
+/bin/rpm --import http://${SSDNSNAME}/pub/ACME-RHSS-GPG-KEY
 
 # Set the address of the satellite server for the rhn agent
 /bin/sed "s/xmlrpc.rhn.redhat.com/${SSDNSNAME}/g" -i /etc/sysconfig/rhn/up2date
@@ -114,7 +114,7 @@ mkdir -p /etc/sysconfig/rhn/allowed-actions/configfiles
 touch /etc/sysconfig/rhn/allowed-actions/configfiles/all
 
 # Install public key(s) for custom channels
-/bin/rpm --import http://knerhsilp001.kiewitplaza.com/pub/KIEWIT-RHSS-GPG-KEY
+/bin/rpm --import http://satellite5.acmeplaza.com/pub/ACME-RHSS-GPG-KEY
 
 
 # Registration

@@ -531,7 +531,7 @@ f_OnIntranet () {
    TO=5
    FLAG=/tmp/aw${TS}
    NSLIST="10.252.13.135 10.252.13.134 10.252.13.133 10.252.26.4"
-   DOMLIST='kiewitplaza.com|kiewit.com|kiewittest.com'
+   DOMLIST='acmeplaza.com|acme.com|acmetest.com'
    for NS in $NSLIST; do
       WAIT=0
       if [[ ! -f $FLAG ]]; then
@@ -885,8 +885,8 @@ f_GetVendor () {
 #-----------------
 # Returns: <IP> 
 f_GetImageServerIP () {
-   IMGSRVPHN=imageprimary.kiewitplaza.com
-   IMGSRVMN=knerhsilp001.kiewitplaza.com
+   IMGSRVPHN=imageprimary.acmeplaza.com
+   IMGSRVMN=satellite5.acmeplaza.com
    HCIP=10.252.14.5
    unset IMGSRVIP
    

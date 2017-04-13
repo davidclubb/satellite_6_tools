@@ -84,7 +84,7 @@ fi
 OS_HOSTNAME=`hostname`
 QA_DIR=/opt/satellite/quality_assurance
 QA_ARC=/opt/satellite/quality_assurance/archived
-QA_SERVER=knerhsilp002
+QA_SERVER=satellite
 QA_SHARE=${QA_SERVER}:/opt/satellite/quality_assurance
 OUTFILENAME=${OS_HOSTNAME}_`$VTS`.html
 OUTFILE=${QA_DIR}/${OUTFILENAME}
@@ -328,7 +328,7 @@ QA_LOGBUFF="$QA_LOGBUFF"\\n"QA_INFO:QA_NETCHECK:Primary network interface [$NET_
 
 # Settings and variables
 NSLIST="10.252.13.135 10.252.13.134 10.252.13.133"
-SEARCHLIST="kiewitplaza.com kiewit.com kiewittest.com"
+SEARCHLIST="acmeplaza.com acme.com acmetest.com"
 
 # Check resolver addresses
 QA_DNSCHECK=PASS
@@ -433,8 +433,8 @@ fi
 
 
 # Settings and variables
-#DCS="knedcxiwp003.kiewitplaza.com knedcxiwp004.kiewitplaza.com knedcxiwp005.kiewitplaza.com"
-DCS="knedcxiwp004.kiewitplaza.com knedcxiwp005.kiewitplaza.com knedcxiwp003.kiewitplaza.com" 
+#DCS="knedcxiwp003.acmeplaza.com knedcxiwp004.acmeplaza.com knedcxiwp005.acmeplaza.com"
+DCS="knedcxiwp004.acmeplaza.com knedcxiwp005.acmeplaza.com knedcxiwp003.acmeplaza.com" 
 
 if [[ $RELEASE -lt 6 ]]; then
    LDC1=/etc/ldap.conf
@@ -545,7 +545,7 @@ fi
 QA_KERBEROSCHECK=PASS
 
 KRBCONF=/etc/krb5.conf
-KRBEDR=KIEWITPLAZA.COM
+KRBEDR=ACMEPLAZA.COM
 KRBRPS="krb5-libs pam_krb5 krb5-workstation"
 
 
@@ -575,7 +575,7 @@ if [[ -s $SAT6CFG1 ]] && [[ -z `$SUBMGR identity 2>&1 | /bin/grep "RHN Classic"`
 
    QA_LOGBUFF="$QA_LOGBUFF"\\n"QA_INFO:QA_SATCHECK:System configured with Subscription Manager"
    
-   SAT6ESS=knerhsilp002.kiewitplaza.com
+   SAT6ESS=satellite.acmeplaza.com
    SAT6ESP=https
    PUPCFG=/etc/puppet/puppet.conf
    PUPEPM=${SAT6ESS}
@@ -643,7 +643,7 @@ elif [[ -s $SAT5CFG1 ]]; then
    SATCLICFG2=/etc/sysconfig/rhn/rhnsd
    SATCLID=/etc/init.d/rhnsd
    SATRPS="rhn-client-tools rhnlib rhnsd rhn-check yum-rhn-plugin"
-   SATESS=knerhsilp001.kiewitplaza.com
+   SATESS=satellite5.acmeplaza.com
    SATESP=https
    SATECI=60
    
@@ -757,8 +757,8 @@ fi
 
 ## Check NTP settings
 
-#server ntp.kiewit.com iburst
-NTPSERVER=ntp.kiewit.com
+#server ntp.acme.com iburst
+NTPSERVER=ntp.acme.com
 ACCEPTIBLEDRIFT=90
 
 QA_TIMECHECK=PASS

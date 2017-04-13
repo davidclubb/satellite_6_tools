@@ -228,7 +228,7 @@ case $MODE in
             echo "dn: $TU_DN" > $LDIF_TMP
             echo "changetype: modify" >> $LDIF_TMP
             echo "replace: msSFU30NisDomain" >> $LDIF_TMP
-            echo "msSFU30NisDomain: KIEWITPLAZA" >> $LDIF_TMP
+            echo "msSFU30NisDomain: ACMEPLAZA" >> $LDIF_TMP
             echo "-" >> $LDIF_TMP
             echo "replace: msSFU30Name" >> $LDIF_TMP
             echo "msSFU30Name: $TARGETUSER" >> $LDIF_TMP

@@ -28,7 +28,7 @@ fi
 apiuser=automation.dnsclient
 apipass=LookForMe53
 
-apiurl=https://kneschiwp001.kiewitplaza.com/dnsapi/v1/
+apiurl=https://kneschiwp001.acmeplaza.com/dnsapi/v1/
 myip=`f_FindPubIP`
 
 # if there are fewer than two dots in the hostname, assuem it's unqualified
@@ -59,12 +59,12 @@ fi
 
 # if the domain wasn't set by any of the above default
 if [[ -z $DOMAIN ]]; then
-   DOMAIN=kiewitplaza.com
+   DOMAIN=acmeplaza.com
 fi
 
 # if the domain was set to reddog.microsoft.com, fix it
 if [[ "$DOMAIN" == "reddog.microsoft.com" ]]; then
-   DOMAIN=kiewitplaza.com
+   DOMAIN=acmeplaza.com
 fi
 
 # Make sure we're not doing something stupid

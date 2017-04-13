@@ -24,8 +24,8 @@ APIGET="/bin/curl -s GET -k -u ${USER}:${PASS}"
 
 # Blacklist systems we don't want to accidentally modify.
 BLACKLIST="
-knerhsilp001
-knerhsilp002
+satellite5
+satellite
 "
 
 # Brief usage advice
@@ -86,7 +86,7 @@ else
 fi
 
 # Determine domain
-DEFAULT_DOMAIN=kiewitplaza.com
+DEFAULT_DOMAIN=acmeplaza.com
 
 if [[ -z $HN_FQDN ]]; then
    #If we couldn't find an FQDN, then use the default domain
@@ -389,7 +389,7 @@ if [[ `$SSHCOMM ${SSHUSER}@${RHOST} hostname` != `$SSHCOMM ${SSHUSER}@${RHOST} h
 fi
 
 # Register with Satellite 6
-$SSHCOMM ${SSHUSER}@${RHOST} sudo subscription-manager register --org="Kiewit" --activationkey="${AK}" --name="`hostname -f`" --force | sed "s/^/$RHOST: /g"
+$SSHCOMM ${SSHUSER}@${RHOST} sudo subscription-manager register --org="${ORG}" --activationkey="${AK}" --name="`hostname -f`" --force | sed "s/^/$RHOST: /g"
 
 # Write the activation key name to the filesystem (this is not actually used by the satellite - this is part of my specific QA processes)
 $SSHCOMM ${SSHUSER}@${RHOST} "sudo sh -c \"echo $AK > /root/activationkey\""

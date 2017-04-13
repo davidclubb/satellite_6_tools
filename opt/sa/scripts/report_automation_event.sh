@@ -42,7 +42,7 @@ else
 fi
 		 
 # Update the DB with the event
-curl -k -X POST --form "origin_hostname=$ORIGIN" --form "target_hostname=$TARGET" --form "processname=$PNAME" --form "triggeredby=$TB" --form "category=$CAT" --form "description=$DESC" --form "target_ip=$TARGETIP" --form "timesaved=$TIMESAVED" --form "datestarted=$START" --form "datefinished=$END" --form "success=$SUCCESS" --netrc https://kneschiwp001.kiewitplaza.com/reportingapi/
+curl -k -X POST --form "origin_hostname=$ORIGIN" --form "target_hostname=$TARGET" --form "processname=$PNAME" --form "triggeredby=$TB" --form "category=$CAT" --form "description=$DESC" --form "target_ip=$TARGETIP" --form "timesaved=$TIMESAVED" --form "datestarted=$START" --form "datefinished=$END" --form "success=$SUCCESS" --netrc https://kneschiwp001.acmeplaza.com/reportingapi/
 
 
 
